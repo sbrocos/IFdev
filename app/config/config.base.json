@@ -1,0 +1,18 @@
+{
+    "application_configure": {
+        "url" : "http://if.dev",
+        "environment" : "development",
+        "use_modul_structure" : "no",
+        "moduleDefault": "main",
+        "layout_default" : "layout.phtml"
+    },
+
+    "database_configure":{
+        "type" : "mysql",
+        "host" : "localhost",
+        "port" : "3306",
+        "username" : "root",
+        "password" : "dev",
+        "name" : "iftest"
+    }
+}
