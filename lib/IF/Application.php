@@ -27,6 +27,10 @@ class IF_Application
      */
     protected $_request;
     /**
+     * @var array;
+     */
+    protected $_estrucMVC;
+    /**
      * Funcion constructora de la clase IF_Application.
      * Inicializa atributos de la clase.
      */
@@ -52,7 +56,7 @@ class IF_Application
         //Include de la libreria IF, solo archivos php, el resto los ignora
         while ($file = readdir($dir_library)) {
             if (strpos( $file, "php")) {
-                include_once $path.'\\'.$file;
+                include_once $path.'/'.$file;
                 //todo revisar que archivos carga en cada momento
             }
         }
@@ -80,6 +84,7 @@ class IF_Application
     /**
      * Función determina si existe un modulo que coicide con el nombre suministrado en el parámetro,
      * sino le asigna el valor "main"
+     * @params
      */
     private function _getModule ($moduleName = null)
     {
@@ -96,18 +101,55 @@ class IF_Application
 
     public function run()
     {
+        $this->_setMVC();
+        var_dump($this->_estrucMVC);
+    }
+
+    /**
+     *
+     */
+    private function _setMVC()
+    {
+        //default values
+        $this->_estrucMVC['module'] = $this->_config->getModuleNameDefault();
+        $this->_estrucMVC['controller'] = 'Index';
+        $this->_estrucMVC['action'] = 'Index';
+        //set init values
         $uri = $this->_request->getUri();
-        $module= 'main';
-        $controller = 'Index';
-        $action = 'Index';
         $modular = $this->_config->useModuleStructure();
-        if ($uri[1]) {
-            if ($modular) {
-                $module = $uri[1];
+        //set module value
+        if ($modular) {
+            if (isset($uri[1])) {
+                $this->_estrucMVC['module'] = $this->_existModule($uri[1]);
+            }
+            if (isset($uri[2])) {
+                $this->_estrucMVC['controller'] = $uri[2];
+            }
+            if (isset($uri[3])) {
+                $this->_estrucMVC['action'] = $uri[3];
+            }
+        } else {
+            {
+                if (isset($uri[1])) {
+                    $this->_estrucMVC['controller'] = $this->_existModule($uri[1]);
+                }
+                if (isset($uri[2])) {
+                    $this->_estrucMVC['action'] = $uri[2];
+                }
             }
         }
-        if
 
+    }
 
+    private function _existModule($module)
+    {
+        $dir_library = @opendir(APP_PATH) or die("error");
+        while ($file = readdir($dir_library)) {
+            if ( $file === $module) {
+                return $module;
+            }
+        }
+        closedir($dir_library);
+        return $this->_config->getModuleNameDefault();
     }
 }

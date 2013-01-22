@@ -43,7 +43,12 @@ class IF_Request
     {
         $query = parse_url($_SERVER['REQUEST_URI']);
         $aux = explode('/', $query['path']);
-        unset($aux[0]);
+        foreach ($aux as $key=>$elem) {
+            if (strlen($elem)=== 0) {
+                unset($aux[$key]);
+            }
+        }
+
         $this->_uri = $aux;
     }
 
