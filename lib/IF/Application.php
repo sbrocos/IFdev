@@ -36,14 +36,13 @@ class IF_Application
      */
     public function __construct()
     {
-        //Carga la libreria IF
         $this->_loadLibrary();
         $this->_config = new IF_Config();
         $this->_isDevelopment();
         $this->_request = new IF_Request();
     }
     /**
-     * Función que carga la librería IF.
+     * Function to load a IF library IF.
      * Carga los archivos php de la carpeta principal, el resto los ignora.
      * Revisar?
      */
@@ -74,13 +73,6 @@ class IF_Application
         }
     }
 
-    private function _runMVC()
-    {
-        $default = "Index";
-        $query = parse_url($_SERVER['REQUEST_URI']);
-        $aux = explode('/', $query['path']);
-    }
-
     /**
      * Función determina si existe un modulo que coicide con el nombre suministrado en el parámetro,
      * sino le asigna el valor "main"
@@ -102,11 +94,19 @@ class IF_Application
     public function run()
     {
         $this->_setMVC();
+<<<<<<< HEAD
+=======
+
+>>>>>>> changes for MVC system
         var_dump($this->_estrucMVC);
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * Function set the Module Controller Action structure
+>>>>>>> changes for MVC system
      */
     private function _setMVC()
     {
@@ -131,13 +131,18 @@ class IF_Application
         } else {
             {
                 if (isset($uri[1])) {
+<<<<<<< HEAD
                     $this->_estrucMVC['controller'] = $this->_existModule($uri[1]);
+=======
+                    $this->_estrucMVC['controller'] = $uri[1];
+>>>>>>> changes for MVC system
                 }
                 if (isset($uri[2])) {
                     $this->_estrucMVC['action'] = $uri[2];
                 }
             }
         }
+<<<<<<< HEAD
 
     }
 
@@ -149,6 +154,28 @@ class IF_Application
                 return $module;
             }
         }
+=======
+    }
+
+    /**
+     * Function determine exist a module.
+     * The name of module must exist as folder name in app,
+     * if not exist this folder, return the name of module by default.
+     *
+     * @param string $module
+     * @return string
+     */
+    private function _existModule($module)
+    {
+        $dir_library = @opendir(APP_PATH) or die("error");
+
+        while ($file = readdir($dir_library)) {
+            if ( $file === $module) {
+                return $module;
+            }
+        }
+
+>>>>>>> changes for MVC system
         closedir($dir_library);
         return $this->_config->getModuleNameDefault();
     }
