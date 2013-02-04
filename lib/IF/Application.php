@@ -94,19 +94,13 @@ class IF_Application
     public function run()
     {
         $this->_setMVC();
-<<<<<<< HEAD
-=======
 
->>>>>>> changes for MVC system
         var_dump($this->_estrucMVC);
     }
 
     /**
-<<<<<<< HEAD
      *
-=======
      * Function set the Module Controller Action structure
->>>>>>> changes for MVC system
      */
     private function _setMVC()
     {
@@ -131,30 +125,14 @@ class IF_Application
         } else {
             {
                 if (isset($uri[1])) {
-<<<<<<< HEAD
                     $this->_estrucMVC['controller'] = $this->_existModule($uri[1]);
-=======
                     $this->_estrucMVC['controller'] = $uri[1];
->>>>>>> changes for MVC system
                 }
                 if (isset($uri[2])) {
                     $this->_estrucMVC['action'] = $uri[2];
                 }
             }
         }
-<<<<<<< HEAD
-
-    }
-
-    private function _existModule($module)
-    {
-        $dir_library = @opendir(APP_PATH) or die("error");
-        while ($file = readdir($dir_library)) {
-            if ( $file === $module) {
-                return $module;
-            }
-        }
-=======
     }
 
     /**
@@ -175,7 +153,6 @@ class IF_Application
             }
         }
 
->>>>>>> changes for MVC system
         closedir($dir_library);
         return $this->_config->getModuleNameDefault();
     }
